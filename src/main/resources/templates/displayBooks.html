@@ -1,0 +1,36 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Books</title>
+	</head>
+	<body>
+		<h1>Book Page</h1>
+		
+		<div th:if="${books?.empty}">
+             <div>No albums found</div>
+        </div>
+		
+	    <div th:unless="${books?.empty}">
+		    <table class="table table-striped table-primary">
+		    <thead class="ttop">
+		        <tr class="table-info">
+		            <td width="20px"><b> ID</b></td>
+		            <td><b>BOOK NAME</b> </td>
+		            <td><b>AUTHOR</b> </td>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="book : ${books}">
+		             
+		            <td width="20px" th:text="${book.id}">
+		            </td><td th:text="${book.name}">
+		            </td><td th:text="${book.author}">
+		       </td></tr>
+		     </tbody>
+		    </table>
+	    </div>
+		
+	</body>
+</html>
