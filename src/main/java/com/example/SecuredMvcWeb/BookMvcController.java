@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.SecuredMvcWeb.Response.GraphQLResponseWithBook;
+import com.example.SecuredMvcWeb.Response.GraphQLResponseWithBookByAuthor;
 import com.example.SecuredMvcWeb.Response.GraphQLResponseWithList;
 
 import lombok.extern.slf4j.Slf4j;
@@ -144,11 +145,12 @@ public class BookMvcController {
 	public String getBookById(@PathVariable("author") String author, Model model) {
 		HttpEntity<String> entity = new HttpEntity<>(GRAPHQL_QUERY_BOOK_BY_AUTHOR.replace("__AUTHOR__", author),
 																							createSecuredHttpHeader());
-		ResponseEntity<GraphQLResponseWithList<Book>> response = restTemplate.exchange(bookServiceUrl,
+		
+		ResponseEntity<GraphQLResponseWithBookByAuthor<Book>> response = restTemplate.exchange(bookServiceUrl,
 																		HttpMethod.POST,
 																		entity,
-																		new ParameterizedTypeReference<GraphQLResponseWithList<Book>>() {});
-		model.addAttribute("books", response.getBody().getData().getList());
+																		new ParameterizedTypeReference<GraphQLResponseWithBookByAuthor<Book>>() {});
+		model.addAttribute("books", response.getBody().getData().getBookByAuthur());
 		
 		return "displayBooks";
 	}
